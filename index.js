@@ -16,6 +16,10 @@ let bot = new Client({
 bot.on('ready', () => console.log(`Logged in as ${bot.user.tag}.`));
 
 bot.on('message', async message => {
+  if(message.content.includes("maryo")) {
+    message.react(message.guild.emojis.cache.get('821472125616390174')).catch(console.error); 
+  }
+  
   if (message.content.startsWith(config.prefix)) {
     let args = message.content.slice(config.prefix.length).split(' ');
     let command = args.shift().toLowerCase();
@@ -25,14 +29,6 @@ bot.on('message', async message => {
         const attachment = new MessageAttachment('https://i.imgur.com/w3duR07.png');
         message.channel.send(attachment);
         break
-
-      // case 'embed':
-      //   const sample_embed = new MessageEmbed()
-      //     .setTitle('A slick little embed')
-      //     .setColor(0xff0000)
-      //     .setDescription('Hello, this is a slick embed!');
-      //   message.channel.send(sample_embed);
-      //   break
 
       case 'ping':
         let msg = await message.reply('Pinging...');
