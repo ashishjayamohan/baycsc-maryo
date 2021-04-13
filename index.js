@@ -1,6 +1,11 @@
 const { Client, MessageEmbed, MessageAttachment} = require('discord.js');
+const Database = require("@replit/database");
+const db = new Database();
 const config = require('./config');
 const commands = require('./help');
+
+var counter = 0;
+var people = ["Ashish", "Maryo", "Luigi"];
 
 let bot = new Client({
   fetchAllMembers: true,
@@ -19,12 +24,29 @@ bot.on('message', async message => {
   if(message.content.includes("maryo")) {
     message.react(message.guild.emojis.cache.get('821472125616390174')).catch(console.error); 
   }
+
+  if(message.content.includes("maryo") && message.content.includes("plant")) {
+    message.react(message.guild.emojis.cache.get('824040453786697758')).catch(console.error); 
+  }
+
+  if(message.content.includes("stonks")) {
+    message.channel.send(new MessageAttachment('https://i.imgur.com/EFqRbev.png'));
+  }
+
+  if((message.content.includes("suggestion") || message.content.includes("suggest") || message.content.includes("think") || message.content.includes("suggest") || message.content.includes("Suggestion") || message.content.includes("Suggest") || message.content.includes("what if") || message.content.includes("What if")) && message.author.username != "baycsc") {
+    message.reply('Do you have a suggestion? Consider opening a new topic in ' + message.guild.channels.cache.get('817135583314182195').toString() + " by going to " + message.guild.channels.cache.get('729539362831859715').toString() + " and typing in `maryo open <subject>`")
+  }
   
   if (message.content.startsWith(config.prefix)) {
     let args = message.content.slice(config.prefix.length).split(' ');
     let command = args.shift().toLowerCase();
 
     switch (command) {
+      case 'lead':
+        message.reply(people[counter]);
+        counter += 1;
+        break;
+
       case 'rip':
         const attachment = new MessageAttachment('https://i.imgur.com/w3duR07.png');
         message.channel.send(attachment);
